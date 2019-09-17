@@ -1,0 +1,2222 @@
+Projet 2 - Médiathèque
+Présentation du sujet
+Motivation et objectif global
+
+Projet : Objectif
+
+​
+
+Cas réel d’entreprise :
+
+​
+
+=> Mise en œuvre d’une banque de données de films.
+
+​
+
+A partir d’une expression de besoin plus ou moins complète, réaliser les analyses nécessaire permettant de modéliser les données, d’implémenter la base de données correspondante et d’effectuer les manipulations cohérentes des données.
+
+Etapes & Compétences associées (cf. référentiel de certification)
+
+Expression de besoin fournie
+
+C8. Analyser et formaliser la demande
+
+​
+
+Modéliser les données
+
+C1. Concevoir et structurer physiquement une BDD
+
+​
+
+Implémenter la base de données 
+
+C1. Concevoir et structurer physiquement une BDD
+
+​
+
+Manipuler les données de la base
+
+C3. Intégrer des données propres et préparées dans la BDD et/ou C5. Interroger la BDD et/ou C2. Acquérir les données
+
+​
+
+Effectuer la maintenance de la base
+
+C4. Optimiser une BDD
+
+​
+
+Développer une application web (ou autre applicatif)
+
+C6. Concevoir et réaliser un rendu visuel des données (dataviz + appli)
+
+​
+
+Expression de besoin fournie
+Les Besoins de L'Utilisateur
+
+Un référentiel de films disponibles à la médiathèque. 
+
+​
+
+Ce référentiel serait mis à disposition des clients pour recherche de film en fonction du titre, du réalisateur, du studio de production. 
+
+​
+
+Afin d’aider au mieux les clients dans leurs choix, le patron souhaite organiser les films par catégorie et par langue. 
+
+​
+
+Le patron souhaite également présenter des informations concernant les acteurs, les studios et les remake de films. 
+
+​
+
+Les clients de la médiathèque doivent pouvoir effectuer une recherche de film sur 2 ou 3 critères, via une interface web.
+
+Les limites du sujet
+
+Le sujet est bien large, il a donc des limites dans l’élaboration de la base de données, qui offert le location de film, ne inclus pas le parti de 
+
+1. paiement actuel.
+
+2. la  disponibilité de chaque film également indiquée.
+
+3. donnant accès à l'emprunt ou au alternatif au cas échéant.
+
+Description des contraintes
+
+MySQL
+
+PHPMySQL
+
+Python
+
+Spyder
+
+Dash
+
+Réponses aux attentes de l’Utilisateur
+Consultation des données
+
+Client :
+
+​
+
+    Base de données au sein d’une médiathèque
+
+​
+
+Ses Clients :
+
+​
+
+    Souhaite disposer d’un référentiel de films disponibles à la médiathèque. 
+
+​
+
+    Recherche de film en fonction du titre, du réalisateur, du studio de production. 
+
+​
+
+    Organiser les films par catégorie et par langue. 
+
+​
+
+    Présenter des informations concernant les acteurs, les studios et les remake de films. 
+
+​
+
+    Effectuer une recherche de film sur 2 ou 3 critères, via une interface web.
+
+​
+
+Mise à jour des données
+
+à determiner
+Livrable final : Produit utilisable + Démo
+Premier determination
+MCD
+
+![MCD](/home/perrot/Bureau/Projet2_WIP/MCP MCD DICT etc/MCD.jpg "MCD")
+MPD
+
+![MPD](/home/perrot/Bureau/Projet2_WIP/MCP MCD DICT etc/MPD.jpg "MPD")
+Dictionnaire
+
+Dict_MarSonFrk.png
+
+![Dictionnaire](/home/perrot/Bureau/Projet2_WIP/MCP MCD DICT etc/Dict_MarSonFrk.pdf "Dictionnaire")
+Plan de API
+
+API.JPG
+BDD & Tables
+Déterminer la création de tables en SQL. A traduire en Python.
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+
+SET time_zone = "+00:00";
+
+​
+
+​
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+
+/*!40101 SET NAMES utf8mb4 */;
+
+​
+
+--
+
+-- Base de données :  `BDD_Sondra`
+
+--
+
+CREATE DATABASE IF NOT EXISTS `BDD_Sondra` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+
+USE `BDD_Sondra`;
+
+-- --------------------------------------------------------
+
+​
+
+--
+
+-- Structure de la table `FILMS`
+
+--
+
+​
+
+DROP TABLE IF EXISTS `FILMS`;
+
+CREATE TABLE `FILMS` (
+
+  `FilmRef` varchar(10) COLLATE utf8_bin NOT NULL,
+
+  `Film_Nom` varchar(60) COLLATE utf8_bin NOT NULL,
+
+  `Film_Ann` int(4) DEFAULT NULL,
+
+  `FR_nom` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+
+  `FP_nom` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+
+  `FS_nom` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+
+  `Categorie` varchar(10) COLLATE utf8_bin DEFAULT NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+​
+
+--
+
+-- Contenu de la table `FILMS`
+
+--
+
+​
+
+INSERT INTO `FILMS` (`FilmRef`, `Film_Nom`, `Film_Ann`, `FR_nom`, `FP_nom`, `FS_nom`, `Categorie`) VALUES
+
+('AA1', 'Shooting Stars', 1928, 'Asquith', NULL, NULL, NULL),
+
+('AA13', 'Pygmalion', 1938, 'Asquith', 'G.Pascal', NULL, NULL),
+
+​
+
+​
+
+-- --------------------------------------------------------
+
+​
+
+--
+
+-- Structure de la table `People`
+
+--
+
+​
+
+DROP TABLE IF EXISTS `People`;
+
+CREATE TABLE `People` (
+
+  `ref` varchar(50) COLLATE utf8_bin NOT NULL,
+
+  `first` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+
+  `last` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+
+  `codes` varchar(10) COLLATE utf8_bin DEFAULT NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+​
+
+--
+
+-- Contenu de la table `People`
+
+--
+
+​
+
+INSERT INTO `People` (`ref`, `first`, `last`, `codes`) VALUES
+
+('A.Bennett', 'Alan', 'Bennett', 'WD'),
+
+('A.Bergman', 'Andrew', 'Bergman', 'WD'),
+
+-- --------------------------------------------------------
+
+​
+
+--
+
+-- Structure de la table `REMAKES`
+
+--
+
+​
+
+DROP TABLE IF EXISTS `REMAKES`;
+
+CREATE TABLE `REMAKES` (
+
+  `RemakeID` varchar(40) COLLATE utf8_bin NOT NULL,
+
+  `OrigID` varchar(40) COLLATE utf8_bin NOT NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+​
+
+--
+
+-- Contenu de la table `REMAKES`
+
+--
+
+​
+
+INSERT INTO `REMAKES` (`RemakeID`, `OrigID`) VALUES
+
+('AA13', 'LuB20'),
+
+('AA13', 'HH15'),
+
+​
+
+#-------------Constraint fails because of the duplication in reference ...soient examinées----------------
+
+#ALTER TABLE REMAKES
+
+#  ADD CONSTRAINT FK_FILMS_FilmRef FOREIGN KEY (FilmRef)     
+
+#      REFERENCES FILMS (FilmRef)
+
+#      ON DELETE CASCADE    
+
+#      ON UPDATE CASCADE
+
+#  ;
+
+#----------------------------------------------------------------------------------------------------------
+
+​
+
+-- --------------------------------------------------------
+
+​
+
+--
+
+-- Structure de la table `ACTEURS`
+
+--
+
+​
+
+DROP TABLE IF EXISTS `ACTEURS`;
+
+CREATE TABLE `ACTEURS` (
+
+  `ActeurID` int(11) NOT NULL,
+
+  `Acteurs` varchar(60) COLLATE utf8_bin DEFAULT NULL,
+
+  `Act_CDB` int(4) DEFAULT NULL,
+
+  `Act_CDF` int(4) DEFAULT NULL,
+
+  `Act_Prenoms` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+
+  `Act_Noms` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+
+  `Act_Sx` varchar(5) COLLATE utf8_bin DEFAULT NULL,
+
+  `Act_DDN` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+
+  `Act_DDD` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+
+  `Act_Prf` varchar(60) COLLATE utf8_bin DEFAULT NULL,
+
+  `Act_Orig` varchar(20) COLLATE utf8_bin DEFAULT NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+​
+
+--
+
+-- Contenu de la table `ACTEURS`
+
+--
+
+​
+
+INSERT INTO `ACTEURS` (`ActeurID`, `Acteurs`, `Act_CDB`, `Act_CDF`, `Act_Prenoms`, `Act_Noms`, `Act_Sx`, `Act_DDN`, `Act_DDD`, `Act_Prf`, `Act_Orig`) VALUES
+
+(100001, 'Willie Aames', NULL, NULL, 'William', 'Aames', 'M', '1960', '199x', 'RU:', 'Am'),
+
+(100002, 'Diahnne Abbott', 1976, 1982, 'Diahnne', 'Abbott', 'F', '1945', '199x', 'R:sexy', 'Am'),
+
+-- --------------------------------------------------------
+
+​
+
+--
+
+-- Structure de la table `CASTS`
+
+--
+
+​
+
+DROP TABLE IF EXISTS `CASTS`;
+
+CREATE TABLE `CASTS` (
+
+  `Film_Ref` varchar(10) COLLATE utf8_bin NOT NULL,
+
+  `Film_Nom` varchar(100) COLLATE utf8_bin NOT NULL,
+
+  `Acteurs` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+
+  `Pers` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+
+  `Role` varchar(200) COLLATE utf8_bin DEFAULT NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+​
+
+--
+
+-- Contenu de la table `CASTS`
+
+--
+
+​
+
+INSERT INTO `CASTS` (`Film_Ref`, `Film_Nom`, `Acteurs`, `Pers`, `Role`) VALUES
+
+('AA13', 'Pygmalion', 'Leslie Howard', 'Sci', NULL),
+
+('AA13', 'Pygmalion', 'Wendy Hiller', 'Inn', NULL),
+
+-- --------------------------------------------------------
+
+​
+
+--
+
+-- Structure de la table `CLIENTS`
+
+--
+
+​
+
+DROP TABLE IF EXISTS `CLIENTS`;
+
+CREATE TABLE `CLIENTS` (
+
+  `ClientID` int(11) NOT NULL,
+
+  `Cl_Nom` varchar(50) COLLATE utf8_bin NOT NULL,
+
+  `Cl_Pren` varchar(50) COLLATE utf8_bin NOT NULL,
+
+  `Cl_Sx` char(1) COLLATE utf8_bin NOT NULL,
+
+  `Cl_DDN` date NOT NULL,
+
+  `Cl_Tel` varchar(14) COLLATE utf8_bin DEFAULT NULL,
+
+  `Cl_Em` varchar(50) COLLATE utf8_bin NOT NULL,
+
+  `Cl_Prf` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+
+  `Cl_Fav` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+
+  `Cl_EC` varchar(5) COLLATE utf8_bin DEFAULT NULL,
+
+  `Cl_Mbr` varchar(15) COLLATE utf8_bin DEFAULT NULL,
+
+  `Cl_Date` date DEFAULT NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+​
+
+--
+
+-- Déclencheurs `CLIENTS`
+
+--
+
+DELIMITER //
+
+CREATE TRIGGER check_sex AFTER INSERT ON CLIENTS FOR EACH ROW BEGIN
+
+IF CLIENTS.Cl_Sx COLLATE utf8_bin NOT IN ('M','F','O') AND CLIENTS.Cl_Sx IS NOT NULL THEN
+
+    SIGNAL SQLSTATE '22222' SET MESSAGE_TEXT='Le sexe doit être''M'' ou ''F'' ou ''O'' ou NULL';
+
+    END IF;
+
+END//
+
+​
+
+-- --------------------------------------------------------
+
+​
+
+--
+
+-- Structure de la table `LOCATION`
+
+--
+
+​
+
+DROP TABLE IF EXISTS `LOCATION`;
+
+CREATE TABLE `LOCATION` (
+
+  `LocationID` int(11) NOT NULL,
+
+  `Loc_DB` date DEFAULT NULL,
+
+  `Loc_DF` date DEFAULT NULL,
+
+  `Client` int(11) NOT NULL,
+
+  `Film` int(11) NOT NULL,
+
+  `Mod_Pay` varchar(15) COLLATE utf8_bin NOT NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+Modifications des csv & données par Python avant de mettre sur PHPMySQL
+
+#Preparation de table d'Acteurs 
+
+import pandas as pd
+
+​
+
+#Ajoute index à Acteurs 
+
+df = pd.read_csv("/home/perrot/Bureau/TEST/TESTTEMP/ACTEURS_orig.csv", encoding = 'utf8', sep=',')
+
+df.insert(0, 'Acteur_ID', range(100001, 100001 + len(df)))
+
+​
+
+#Set Index à Acteur_ID column
+
+df.set_index("Acteur_ID", inplace = True) 
+
+​
+
+print(df.head())
+
+​
+
+#Save to CSV file
+
+#df.to_csv('/home/perrot/Bureau/TEST/ACTEURS.csv')
+
+           Unnamed: 0 Act_ID              Film_Nom        Acteurs Pers  \
+Acteur_ID                                                                
+100001              0   AA13             Pygmalion  Leslie Howard  Sci   
+100002              1   AM18  The Petrified Forest  Leslie Howard  Und   
+100003              2  EHG20    The Animal Kingdom  Leslie Howard  Und   
+100004              3  FLl62       Berkeley Square  Leslie Howard  Und   
+100005              4   GC15      Romeo and Juliet  Leslie Howard  Und   
+
+                                      Role ActeurID Act_CDB  Act_CDF  \
+Acteur_ID                                                              
+100001          R:smug professor "Higgins"  A005812    1930   1943.0   
+100002          R:world-weary intellectual  A005812    1930   1943.0   
+100003             R:torn beween two women  A005812    1930   1943.0   
+100004     R:house oener, switches periods  A005812    1930   1943.0   
+100005                     R:Lover "Romeo"  A005812    1930   1943.0   
+
+          Act_Prenoms Act_Noms Act_Sx Act_DDN Act_DDD  \
+Acteur_ID                                               
+100001         Leslie  Stainer      M    1890    1943   
+100002         Leslie  Stainer      M    1890    1943   
+100003         Leslie  Stainer      M    1890    1943   
+100004         Leslie  Stainer      M    1890    1943   
+100005         Leslie  Stainer      M    1890    1943   
+
+                           Act_Prf Act_Orig  
+Acteur_ID                                    
+100001     R:romantic intellectual       Hu  
+100002     R:romantic intellectual       Hu  
+100003     R:romantic intellectual       Hu  
+100004     R:romantic intellectual       Hu  
+100005     R:romantic intellectual       Hu  
+
+#Read casts & acteur csv - NOTE: Quelque fois il y a un erreur, il faut de faire RUN dans Spyder.
+
+#Cela ne génère pas de données précises car il ya des noms d'acteurs en double et donc le résultat peut être faux.
+
+#import pandas as pd
+
+​
+
+#Casts=pd.read_csv("/home/perrot/Bureau/TEST/TESTTEMP/CASTS.csv", encoding = 'utf8', sep=',')
+
+#Casts.columns=["Acteurs"]
+
+#Acteurs=pd.read_csv("/home/perrot/Bureau/TEST/TESTTEMP/ACTEURS.csv", encoding = 'utf8', sep=',')
+
+#Acteurs.columns=["Acteurs"]
+
+​
+
+#Merge casts & actors
+
+#CAmerge=pd.merge(Casts, Acteurs, on='Acteurs', how='inner')
+
+#print(CAmerge.head())
+
+#Save to CSV file
+
+#CAmerge.to_csv('/home/perrot/Bureau/Projet2_WIP/CSV/FILMACT.csv', sep=',', columns=['Film_Ref', 'Acteur_ID'], index=False, header=True, mode='w', encoding=None)
+
+​
+
+#Remplacer REMAKES.CSV (table de jointure)
+
+​
+
+import pandas as pd
+
+​
+
+REMAKEJ=pd.read_csv("/home/perrot/Bureau/TEST/TESTTEMP/REMAKES.csv", encoding = 'utf8', sep=',')
+
+REMAKEJ.to_csv('/home/perrot/Bureau/TEST/REMAKESJJ.csv', sep=',', columns=['RemakeID', 'OrigID'], index=False, header=True, mode='w', encoding=None)  
+
+Executer Python3 - Tables et données
+
+Créer une structure de table et mettre en ligne les données. Ajouter les producers en people.
+
+#Connecté avec le serveur ....ssh -X -L3306:localhost:3306 -L5432:localhost:5432 $USER@datalab.myconnectech.fr
+
+# -*- coding: utf-8 -*-
+
+​
+
+#~ https://github.com/cernoch/movies.git
+
+​
+
+# executer avec :
+
+#> python3 P2_CSV2SQLSP.py --base /home/perrot/Bureau/TEST --bdd BDD_Sondra?charset=utf8
+
+​
+
+import pandas as pd
+
+import numpy as np
+
+from sqlalchemy import create_engine
+
+import argparse
+
+#~ import creds
+
+import os,configparser # credentials: 
+
+​
+
+parser = argparse.ArgumentParser()
+
+#~ parser.add_argument("-f", action="store_true", help="traite FILMS")
+
+#~ parser.add_argument("-p", action="store_true", help="traite People")
+
+parser.add_argument("-v", action="store_true", help="Verbose SQL")
+
+parser.add_argument("--base", help="Répertoire de movies")
+
+parser.add_argument("--bdd", help="Base de donnée")
+
+args = parser.parse_args()
+
+​
+
+config = configparser.ConfigParser()
+
+config.read_file(open(os.path.expanduser("~/.datalab.cnf")))
+
+print(config.sections())
+
+​
+
+base = args.base #"/home/perrot/Bureau/TEST"
+
+​
+
+DB=args.bdd #'BDD_Sondra?charset=utf8' # mySQL...
+
+mySQLengine = create_engine("mysql://%s:%s@%s/%s" % (config['myBDD']['user'], config['myBDD']['password'], config['myBDD']['host'], DB), echo=args.v)
+
+​
+
+# Suppression des tables (dans le bon ordre)
+
+# Vidage des tables : Film et People
+
+mySQLengine.execute("DROP TABLE IF EXISTS FILMS ;")
+
+mySQLengine.execute("SET FOREIGN_KEY_CHECKS = 0;");
+
+mySQLengine.execute("DROP TABLE IF EXISTS People ;")
+
+mySQLengine.execute("SET FOREIGN_KEY_CHECKS = 1;");
+
+mySQLengine.execute("DROP TABLE IF EXISTS REMAKES ;")
+
+mySQLengine.execute("SET FOREIGN_KEY_CHECKS = 1;");
+
+mySQLengine.execute("DROP TABLE IF EXISTS CASTS ;")
+
+mySQLengine.execute("SET FOREIGN_KEY_CHECKS = 1;");
+
+mySQLengine.execute("DROP TABLE IF EXISTS ACTEURS ;")
+
+mySQLengine.execute("SET FOREIGN_KEY_CHECKS = 1;");
+
+mySQLengine.execute("DROP TABLE IF EXISTS CLIENTS ;")
+
+mySQLengine.execute("SET FOREIGN_KEY_CHECKS = 1;");
+
+mySQLengine.execute("DROP TABLE IF EXISTS LOCATION ;")
+
+mySQLengine.execute("SET FOREIGN_KEY_CHECKS = 1;");
+
+​
+
+# Création, avec script. Un lien externe Film.producer -> People.ref
+
+mySQLengine.execute("""
+
+CREATE TABLE IF NOT EXISTS `BDD_Sondra`.`People` (
+
+  `ref` VARCHAR(50) NOT NULL,
+
+  `first` VARCHAR(45) NULL,
+
+  `last` VARCHAR(45) NULL,
+
+  `codes` VARCHAR(10) NULL,
+
+  PRIMARY KEY (`ref`))
+
+ENGINE = InnoDB
+
+DEFAULT CHARACTER SET = utf8
+
+COLLATE = utf8_bin;
+
+""")
+
+​
+
+mySQLengine.execute("""
+
+CREATE TABLE IF NOT EXISTS `BDD_Sondra`.`FILMS` (
+
+   FilmRef VARCHAR(10) NOT NULL,
+
+   Film_Nom VARCHAR(60) NOT NULL,
+
+   Film_Ann INT(4) NULL,
+
+   FR_nom VARCHAR(50) NULL,
+
+   FP_nom VARCHAR(50) NULL,
+
+   FS_nom VARCHAR(50) NULL,
+
+   Categorie VARCHAR(10) NULL,
+
+  PRIMARY KEY (`FilmRef`),
+
+  UNIQUE INDEX `FilmRef_UNIQUE` (`FilmRef` ASC))
+
+ENGINE = InnoDB
+
+DEFAULT CHARACTER SET = utf8
+
+COLLATE = utf8_bin;
+
+""")
+
+​
+
+mySQLengine.execute("""
+
+CREATE TABLE IF NOT EXISTS `BDD_Sondra`.`REMAKES` (
+
+    RemakeID VARCHAR(40) NOT NULL,
+
+    OrigID VARCHAR(40) NOT NULL) 
+
+ENGINE = InnoDB
+
+DEFAULT CHARACTER SET = utf8
+
+COLLATE = utf8_bin;
+
+""")
+
+​
+
+mySQLengine.execute("""
+
+CREATE TABLE IF NOT EXISTS `BDD_Sondra`.`ACTEURS` (
+
+    ActeurID INT NOT NULL AUTO_INCREMENT,
+
+    Acteurs VARCHAR(60) NULL,
+
+    Act_CDB INT(4) NULL,
+
+    Act_CDF INT(4) NULL,
+
+    Act_Prenoms VARCHAR(45) NULL,
+
+    Act_Noms VARCHAR(45) NULL,
+
+    Act_Sx VARCHAR(5) NULL,
+
+    Act_DDN VARCHAR(45) NULL,
+
+    Act_DDD VARCHAR(45) NULL,
+
+    Act_Prf VARCHAR(60) NULL,
+
+    Act_Orig VARCHAR(20) NULL,
+
+    PRIMARY KEY (`ActeurID`))
+
+ENGINE = InnoDB
+
+DEFAULT CHARACTER SET = utf8
+
+COLLATE = utf8_bin;
+
+""")
+
+​
+
+mySQLengine.execute("""
+
+CREATE TABLE IF NOT EXISTS `BDD_Sondra`.`CASTS` (
+
+   Film_Ref VARCHAR(10) NOT NULL,
+
+   Film_Nom VARCHAR(100) NOT NULL,
+
+   Acteurs VARCHAR(50) NULL,
+
+   Pers VARCHAR(50) NULL,
+
+   Role VARCHAR(200) NULL)
+
+ENGINE = InnoDB
+
+DEFAULT CHARACTER SET = utf8
+
+COLLATE = utf8_bin;
+
+""")
+
+​
+
+mySQLengine.execute("""
+
+CREATE TABLE IF NOT EXISTS `BDD_Sondra`.`CLIENTS` (
+
+    ClientID INT NOT NULL AUTO_INCREMENT,
+
+    Cl_Nom VARCHAR(50) NOT NULL,
+
+    Cl_Pren VARCHAR(50) NOT NULL,
+
+    Cl_Sx CHAR(1) NOT NULL,
+
+    Cl_DDN DATE NOT NULL,
+
+    Cl_Tel VARCHAR(14) DEFAULT NULL,
+
+    Cl_Em VARCHAR (50) NOT NULL UNIQUE,
+
+    Cl_Prf VARCHAR(50) DEFAULT NULL,
+
+    Cl_Fav VARCHAR(50) DEFAULT NULL,
+
+    Cl_EC VARCHAR(5) DEFAULT NULL,
+
+    Cl_Mbr VARCHAR(15) DEFAULT NULL,
+
+    Cl_Date DATE,
+
+    PRIMARY KEY (`ClientID`))
+
+ENGINE = InnoDB
+
+DEFAULT CHARACTER SET = utf8
+
+COLLATE = utf8_bin;
+
+""")
+
+​
+
+mySQLengine.execute("""
+
+CREATE TABLE IF NOT EXISTS `BDD_Sondra`.`LOCATION` (
+
+   LocationID INT NOT NULL AUTO_INCREMENT,
+
+   Loc_DB DATE DEFAULT NULL,
+
+   Loc_DF DATE DEFAULT NULL,
+
+   Client INT NOT NULL,
+
+   Film INT NOT NULL,
+
+   Mod_Pay VARCHAR(15) NOT NULL, 
+
+   PRIMARY KEY (`LocationID`))
+
+ENGINE = InnoDB
+
+DEFAULT CHARACTER SET = utf8
+
+COLLATE = utf8_bin;
+
+""")
+
+​
+
+# lecture CSV
+
+peopleCSV = pd.read_csv(base+"/people.csv", encoding = 'utf8', sep=',', header=None)
+
+peopleCSV.columns = ('Ref_name', 'codes', 'Did', 'years', 'last_n', 'first_n', 'dob', 'dod') # FROM HTML
+
+​
+
+# le même, avec les colonnes qui nous intéresse
+
+people = peopleCSV[['Ref_name', 'first_n', 'last_n', 'codes']] # Selection column
+
+people.columns = ('ref', 'first', 'last', 'codes') # Rename to SQL
+
+people.drop_duplicates(subset='ref', keep='first', inplace=True) # Drop duplicate for UNIQUE
+
+people.set_index('ref', inplace=True) # nouvel index
+
+​
+
+if (True): #(args.f):
+
+    # Les films
+
+    FILMSCSV = pd.read_csv(base+"/FILMS.csv", encoding = 'utf8', sep=',')
+
+    FILMSCSV.columns = ('FilmRef','Film_Nom', 'Film_Ann', 'FR_nom', 'FP_nom', 'FS_nom', 'Process', 'Categorie', 'F_Rcp')
+
+    # le même, avec les colonnes qui nous intéresse
+
+    FILMS = FILMSCSV[['FilmRef','Film_Nom', 'Film_Ann', 'FR_nom', 'FP_nom']]
+
+​
+
+    # Longueur title, producer: 45
+
+    FILMS['Film_Nom'] = FILMS['Film_Nom'].str[:45] 
+
+    FILMS['FP_nom'] = FILMS['FP_nom'].str[:45] # lien extern !
+
+    FILMS['FR_nom'] = FILMS['FR_nom'].str[:45] # lien extern !
+
+    
+
+    # Les producers doivent exister dans people !
+
+    FILMS['FP_nom'].replace('\s*,.*', '', inplace=True, regex=True)
+
+    FILMS['FP_nom'].replace('P\w:.*', '', inplace=True, regex=True)
+
+    FILMS['FP_nom'].replace('P:\s*', '', inplace=True, regex=True)
+
+​
+
+    FILMS['FR_nom'].replace('D:\s*', '', inplace=True, regex=True)
+
+​
+
+    print(FILMS)
+
+​
+
+    # Vérification de l'existance des liens externe...
+
+    for x in FILMS['FP_nom']:
+
+        if (x!="" and x not in people.index):
+
+            # Si un producer n'esst pas dans l'index de people, on ajoute !
+
+            print("+++ P:", x)
+
+            people.loc[x] = [x, '', '?']
+
+​
+
+    for x in FILMS['FR_nom']:
+
+        if (x!="" and x not in people.index):
+
+            # Si un producer n'esst pas dans l'index de people, on ajoute !
+
+            print("+++ D:", x)
+
+            people.loc[x] = [x, '', '?']
+
+​
+
+    people.index = people.index.fillna('NA') # pas de ref vide...
+
+    #print(people)
+
+    
+
+    FILMS['FP_nom'].replace(r'^\s*$', np.nan, regex=True, inplace=True) # remplacement reférence vide -> NaN pour SQL
+
+    FILMS['FR_nom'].replace(r'^\s*$', np.nan, regex=True, inplace=True) # remplacement reférence vide -> NaN pour SQL
+
+​
+
+    #~ mySQLengine.execute("TRUNCATE People;# Wesh") # Empty table
+
+    people.to_sql('People', mySQLengine, if_exists='append', index=True)
+
+​
+
+    #~ mySQLengine.execute("TRUNCATE Film;")
+
+    FILMS.to_sql('FILMS', mySQLengine, if_exists='append', index=False)
+
+​
+
+    # Les Remakes
+
+REMAKESCSV = pd.read_csv(base+"/REMAKESJ.csv", encoding = 'utf8', sep=',')
+
+REMAKESCSV.columns = ('RemakeID','OrigID')
+
+REMAKES = REMAKESCSV[['RemakeID','OrigID']]
+
+print(REMAKES)
+
+    
+
+    #~ mySQLengine.execute("TRUNCATE REMAKES;")
+
+REMAKES.to_sql('REMAKES', mySQLengine, if_exists='append', index=False)
+
+​
+
+    # Les Acteur
+
+ACTEURSCSV = pd.read_csv(base+"/ACTEURS.csv", encoding = 'utf8', sep=',')
+
+ACTEURSCSV.columns = ('ActeurID','Acteurs','Act_CDB','Act_CDF','Act_Prenoms','Act_Noms','Act_Sx','Act_DDN','Act_DDD','Act_Prf','Act_Orig')
+
+ACTEURS = ACTEURSCSV[['ActeurID','Acteurs','Act_CDB','Act_CDF','Act_Prenoms','Act_Noms','Act_Sx','Act_DDN','Act_DDD','Act_Prf','Act_Orig']]
+
+print(ACTEURS)
+
+​
+
+    #~ mySQLengine.execute("TRUNCATE ACTEURS;")
+
+ACTEURS.to_sql('ACTEURS', mySQLengine, if_exists='append', index=False)
+
+​
+
+    # Les Casts
+
+CASTSCSV = pd.read_csv(base+"/CASTS.csv", encoding = 'utf8', sep=',')
+
+CASTSCSV.columns = ('Film_Ref','Film_Nom','Acteurs','Pers','Role')
+
+CASTS = CASTSCSV[['Film_Ref','Film_Nom','Acteurs','Pers']]
+
+print(CASTS)
+
+​
+
+    #~ mySQLengine.execute("TRUNCATE CASTS;")
+
+CASTS.to_sql('CASTS', mySQLengine, if_exists='append', index=False) 
+
+​
+
+# Add chunksize=1 if errors - for more information.
+
+​
+
+​
+
+-- Modifications par SQL
+
+# ------ TABLE CLIENTS ------
+
+#Créer TRIGGER pour CLIENTS.Cl_Sx
+
+DELIMITER //
+
+CREATE TRIGGER check_sex AFTER INSERT ON CLIENTS FOR EACH ROW BEGIN
+
+IF CLIENTS.Cl_Sx COLLATE utf8_bin NOT IN ('M','F','O') AND CLIENTS.Cl_Sx IS NOT NULL THEN
+
+    SIGNAL SQLSTATE '22222' SET MESSAGE_TEXT='Le sexe doit être''M'' ou ''F'' ou ''O'' ou NULL';
+
+    END IF;
+
+END//
+
+#NON FAIT - Créer TRIGGER si DDN est moins de 18 ans  (IF CURRENTYEAR minus 18) puis films avec le catergorie Adct, Porn, ? est pas disponible
+
+#Remplir CLIENTS avec données
+
+INSERT INTO BDD_SONDRA.CLIENTS (Cl_Nom, Cl_Pren, Cl_Sx, Cl_DDN, Cl_Tel, Cl_Em, Cl_Prf, Cl_Fav, Cl_EC, Cl_Mbr, Cl_Date)
+
+VALUES 
+
+    ('Moet', 'Jean', 'M', '1975/03/02', '06 23 00 00 11', 'moet.j@hotmail.fr', 'Comptable', 'Drame', 'Marie', '', '2019/05/23'),
+
+    ('Stein', 'Marie', 'F', '1983/10/22', '06 66 00 00 22', 'steinm@hotmail.fr', 'Medicin', 'Romance', 'Marie', '', '2019/06/02'),
+
+    ('Durand', 'Michel', 'M', '1972/09/17', '06 45 00 00 33', 'michel.durand@hotmail.fr', 'Infirmier', 'Horreur', 'Marie', '', '2019/01/15'),
+
+    ('Ruelle', 'Zara', 'O', '2005/06/06', '06 71 00 00 44', 'zrue12@hotmail.fr', 'Etudiante', 'Comédie', 'Celibataire', '', '2019/05/23');
+
+​
+
+#Remplir LOCATION avec données
+
+INSERT INTO BDD_SONDRA.LOCATION (Loc_DB, Loc_DF, Client, Film, Mod_Pay)
+
+VALUES 
+
+    ('2019/05/23', '2019/05/30', '1', 'MP6', 'Visa'),
+
+    ('2019/06/02', '2019/06/09', '2', 'HY1', 'PayPal'),
+
+    ('2019/01/15', '2019/01/22', '3', 'FLl62', 'Visa'),
+
+    ('2019/05/23', '2019/05/30', '4', 'GrR3', 'Visa');
+
+# Clés primaires & clés étrangères
+
+​
+
+----------- Index pour la tables  --
+
+​
+
+​
+
+ALTER TABLE `ACTEURS`
+
+  ADD PRIMARY KEY (`ActeurID`);
+
+​
+
+ALTER TABLE `CLIENTS`
+
+  ADD PRIMARY KEY (`ClientID`),
+
+  ADD UNIQUE KEY `Cl_Em` (`Cl_Em`);
+
+​
+
+ALTER TABLE `FILMS`
+
+  ADD PRIMARY KEY (`FilmRef`),
+
+  ADD UNIQUE KEY `FilmRef_UNIQUE` (`FilmRef`);
+
+​
+
+ALTER TABLE `LOCATION`
+
+  ADD PRIMARY KEY (`LocationID`);
+
+​
+
+ALTER TABLE `People`
+
+  ADD PRIMARY KEY (`ref`);
+
+​
+
+----------------------
+
+​
+
+-- AUTO_INCREMENT pour les tables exportées --
+
+​
+
+ALTER TABLE `ACTEURS`
+
+  MODIFY `ActeurID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106819;
+
+​
+
+ALTER TABLE `CLIENTS`
+
+  MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+​
+
+ALTER TABLE `LOCATION`
+
+  MODIFY `LocationID` int(11) NOT NULL AUTO_INCREMENT;
+
+    
+
+​
+
+---------------------
+
+    
+
+ALTER TABLE `FILMS` 
+
+    ADD CONSTRAINT `FK_FILMS_CASTS` 
+
+    FOREIGN KEY (`FilmRef`) 
+
+    REFERENCES `CASTS`(`Film_Ref`) 
+
+    ON DELETE NO ACTION 
+
+    ON UPDATE NO ACTION;  
+
+    
+
+#Remove duplicates
+
+#Detect
+
+SELECT FilmRef, COUNT(*)
+
+FROM main
+
+GROUP BY FilmRef
+
+​
+
+#Select
+
+SELECT FilmRef, COUNT(*)
+
+FROM FILMS_INT
+
+GROUP BY FilmRef
+
+​
+
+#Select > 1
+
+​
+
+SELECT FilmRef, COUNT(*)
+
+FROM FILMS_INT
+
+GROUP BY FilmRef
+
+HAVING COUNT(*) >1
+
+ORDER BY COUNT(*) DESC
+
+​
+
+#Aucune duplication trouver
+
+FAIRE LES RECHERCHES
+
+Pour le moment, les recherches dans l'API ne sont pas possible.....
+
+- des requêtes simples
+
+- des requêtes impliquant des jointures
+
+- des requêtes d’agrégation
+
+​
+
+Voici les recherches à partir les csv.
+
+Recherche de film en fonction du titre, du réalisateur, du studio de production.
+
+#FILM PAR TITRE - TABLE FILMS
+
+import pandas as pd
+
+import numpy as np
+
+​
+
+FILMSCSV = pd.read_csv("/home/perrot/Bureau/TEST/FILMS.csv", encoding='utf8', sep=',')
+
+FILMSCSV.columns = ('FilmRef', 'Film_Nom', 'Film_Ann', 'FR_nom', 'FP_nom', 'FS_nom', 'Process', 'Categorie', 'F_Rcp')
+
+FILMS = FILMSCSV[['FilmRef', 'Film_Nom', 'Film_Ann', 'FR_nom', 'FP_nom', 'Categorie']]
+
+​
+
+SFILM =  FILMS.query('Film_Nom == "Frenzy"')
+
+print(SFILM)
+
+  FilmRef Film_Nom  Film_Ann       FR_nom       FP_nom Categorie
+3     H83   Frenzy    1972.0  D:Hitchcock  P:Hitchcock  Suspense
+
+# FILM PAR REALISATEUR - TABLE FILMS
+
+import pandas as pd
+
+import numpy as np
+
+​
+
+FILMSCSV = pd.read_csv("/home/perrot/Bureau/TEST/FILMS.csv", encoding='utf8', sep=',')
+
+FILMSCSV.columns = ('FilmRef', 'Film_Nom', 'Film_Ann', 'FR_nom', 'FP_nom', 'FS_nom', 'Process', 'Categorie', 'F_Rcp')
+
+FILMS = FILMSCSV[['FilmRef', 'Film_Nom', 'Film_Ann', 'FR_nom', 'FP_nom', 'Categorie']]
+
+​
+
+SPR =  FILMS.query('FR_nom == "D:Hitchcock"')
+
+print(SPR.head())
+
+     FilmRef      Film_Nom  Film_Ann       FR_nom       FP_nom Categorie
+3        H83        Frenzy    1972.0  D:Hitchcock  P:Hitchcock  Suspense
+4218     H84   Family Plot    1976.0  D:Hitchcock  P:Hitchcock  Suspense
+5156     H82         Topaz    1969.0  D:Hitchcock  P:Hitchcock  Suspense
+5542     H81  Torn Curtain    1966.0  D:Hitchcock  P:Hitchcock  Suspense
+5811     H80        Marnie    1964.0  D:Hitchcock  P:Hitchcock  Suspense
+
+# FILM PAR STUDIO - TABLE FILMS
+
+import pandas as pd
+
+import numpy as np
+
+​
+
+FILMSCSV = pd.read_csv("/home/perrot/Bureau/TEST/FILMS.csv", encoding='utf8', sep=',')
+
+FILMSCSV.columns = ('FilmRef', 'Film_Nom', 'Film_Ann', 'FR_nom', 'FP_nom', 'FS_nom', 'Process', 'Categorie', 'F_Rcp')
+
+FILMS = FILMSCSV[['FilmRef', 'Film_Nom', 'Film_Ann', 'FS_nom', 'Categorie']]
+
+​
+
+SPS =  FILMS.query('FS_nom == "S:Disney"')
+
+print(SPS.head())
+
+    FilmRef              Film_Nom  Film_Ann    FS_nom        Categorie
+194   SnT28             Mr. Magoo    1998.0  S:Disney  Action, Comédie
+239   WeA10              Rushmore    1998.0  S:Disney          Comédie
+319   NMe10       The Parent Trap    1998.0  S:Disney          Famille
+471   SvB12  George of the Jungle    1997.0  S:Disney          Comédie
+649   GaT16                Kazaam    1996.0  S:Disney            Drame
+
+Organiser les films par catégorie.
+
+#FILM PAR CATEGORIE - TABLE FILMS
+
+import pandas as pd
+
+import numpy as np
+
+​
+
+FILMSCSV = pd.read_csv("/home/perrot/Bureau/TEST/FILMS.csv", encoding='utf8', sep=',')
+
+FILMSCSV.columns = ('FilmRef', 'Film_Nom', 'Film_Ann', 'FR_nom', 'FP_nom', 'FS_nom', 'Process', 'Categorie', 'F_Rcp')
+
+FILMS = FILMSCSV[['FilmRef', 'Film_Nom', 'Film_Ann', 'Categorie']]
+
+​
+
+SPCat =  FILMS.query('Categorie == "Action"')
+
+print(SPCat.head())
+
+    FilmRef         Film_Nom  Film_Ann Categorie
+36    JoA19       Entrapment    1999.0    Action
+58    BRa12        Rush Hour    1999.0    Action
+66     JGK2            Swiri    1999.0    Action
+117    RD43  Lethal Weapon 4    1998.0    Action
+184    Ezw9            Siege    1998.0    Action
+
+Présenter des informations concernant les acteurs.
+
+#ACTEUR PAR DDN - TABLE ACTEURS
+
+import pandas as pd
+
+import numpy as np
+
+​
+
+ACTEURSCSV = pd.read_csv("/home/perrot/Bureau/TEST/ACTEURS.csv", encoding = 'utf8', sep=',')
+
+ACTEURSCSV.columns = ('ActeurID','Acteurs','Act_CDB','Act_CDF','Act_Prenoms','Act_Noms','Act_Sx','Act_DDN','Act_DDD','Act_Prf','Act_Orig')
+
+ACTEURS = ACTEURSCSV[['ActeurID','Acteurs','Act_CDB','Act_CDF','Act_Prenoms','Act_Noms','Act_Sx','Act_DDN','Act_DDD','Act_Prf','Act_Orig']]
+
+​
+
+SAct =  ACTEURS.query('Acteurs == "Audrey Hepburn"')
+
+print(SAct.head())
+
+#ACTEUR PAR FILM - TABLE CASTS
+
+# La fonction prend du temps à générer
+
+​
+
+import pandas as pd
+
+​
+
+CASTSCSV = pd.read_csv("/home/perrot/Bureau/TEST/GRAPHICCSV/CASTS.csv", encoding = 'utf8', sep=',')
+
+CASTSCSV.columns = ('Film_Ref','Film_Nom','Acteurs','Pers','Role')
+
+CASTS = CASTSCSV[['Film_Nom','Acteurs']]
+
+#print(CASTS)
+
+​
+
+CASTS.groupby('Film_Nom') 
+
+print(CASTS.groupby('Film_Nom').groups) 
+
+gk = CASTS.groupby('Film_Nom')
+
+gk.first()
+
+grp = CASTS.groupby('Film_Nom') 
+
+for Film_Nom, group in grp: 
+
+#    print(Film_Nom) 
+
+#    print(group) 
+
+#    print() 
+
+  File "<ipython-input-6-ab6f85307f41>", line 18
+    #    print()
+                 ^
+SyntaxError: unexpected EOF while parsing
+
+
+groupeacteurparfilm.png
+
+import pandas as pd
+
+import numpy as np
+
+​
+
+CASTSCSV = pd.read_csv("/home/perrot/Bureau/TEST/GRAPHICCSV/CASTS.csv", encoding = 'utf8', sep=',')
+
+CASTSCSV.columns = ('Film_Ref','Film_Nom','Acteurs','Pers','Role')
+
+CASTS = CASTSCSV[['Film_Nom','Acteurs']]
+
+#print(CASTS)
+
+​
+
+SCAct =  CASTS.query('Film_Nom == "Sabrina"')
+
+print(SCAct.head())
+
+     Film_Nom          Acteurs
+4308  Sabrina   Audrey Hepburn
+4309  Sabrina  Humphrey Bogart
+4310  Sabrina   William Holden
+4311  Sabrina    John Williams
+4312  Sabrina   Walter Hampden
+
+#FILMS PAR ACTEUR - TABLE CASTS
+
+# La fonction prend du temps à générer
+
+​
+
+import pandas as pd
+
+​
+
+CASTSCSV = pd.read_csv("/home/perrot/Bureau/TEST/GRAPHICCSV/CASTS.csv", encoding = 'utf8', sep=',')
+
+CASTSCSV.columns = ('Film_Ref','Film_Nom','Acteurs','Pers','Role')
+
+CASTS = CASTSCSV[['Film_Nom','Acteurs']]
+
+#print(CASTS)
+
+​
+
+CASTS.groupby('Acteurs') 
+
+print(CASTS.groupby('Acteurs').groups) 
+
+gk = CASTS.groupby('Acteurs')
+
+gk.first()
+
+grp = CASTS.groupby('Acteurs') 
+
+for Film_Nom, group in grp: 
+
+#    print(Acteurs) 
+
+#    print(group) 
+
+#    print() 
+
+  File "<ipython-input-8-1bedb6eafdd1>", line 18
+    #    print()
+                 ^
+SyntaxError: unexpected EOF while parsing
+
+
+import pandas as pd
+
+import numpy as np
+
+​
+
+CASTSCSV = pd.read_csv("/home/perrot/Bureau/TEST/GRAPHICCSV/CASTS.csv", encoding = 'utf8', sep=',')
+
+CASTSCSV.columns = ('Film_Ref','Film_Nom','Acteurs','Pers','Role')
+
+CASTS = CASTSCSV[['Film_Nom','Acteurs']]
+
+#print(CASTS)
+
+​
+
+SCAct =  CASTS.query('Acteurs == "Audrey Hepburn"')
+
+print(SCAct.head())
+
+​
+
+                     Film_Nom         Acteurs
+3038   Breakfast at Tiffany's  Audrey Hepburn
+4308                  Sabrina  Audrey Hepburn
+4325    Love In The Afternoon  Audrey Hepburn
+5830    The Lavender Hill Mob  Audrey Hepburn
+12101         The Nun's Story  Audrey Hepburn
+
+Présenter des informations concernant les remake de films.
+
+#FILMS - REMAKE
+
+import pandas as pd
+
+​
+
+REMAKESCSV = pd.read_csv("/home/perrot/Bureau/TEST/REMAKES.csv", encoding='utf8', sep=',')
+
+REMAKESCSV.columns = ('RemakeID', 'R_Film', 'R_Ann', 'RP', 'OrigID', 'O_Film', 'O_Ann')
+
+REMAKES = REMAKESCSV[['OrigID', 'O_Film', 'O_Ann', 'RemakeID', 'R_Film', 'R_Ann']]
+
+​
+
+SFPR = REMAKES[(REMAKES.O_Film == "Pygmalion") | (REMAKES.R_Film == "")]
+
+print(SFPR)
+
+​
+
+    OrigID     O_Film O_Ann RemakeID        R_Film R_Ann
+0    LuB20  Pygmalion  1937     AA13     Pygmalion  1938
+350   AA13  Pygmalion  1938     GC48  My Fair Lady  1963
+428   AA13  Pygmalion  1938    GyM20  Pretty Woman  1990
+759  xEn10  Pygmalion  1935    LuB20     Pygmalion  1937
+
+#REMAKES - FILM
+
+import pandas as pd
+
+​
+
+REMAKESCSV = pd.read_csv("/home/perrot/Bureau/TEST/REMAKES.csv", encoding='utf8', sep=',')
+
+REMAKESCSV.columns = ('RemakeID', 'R_Film', 'R_Ann', 'RP', 'OrigID', 'O_Film', 'O_Ann')
+
+REMAKES = REMAKESCSV[['RemakeID', 'R_Film', 'R_Ann', 'OrigID', 'O_Film', 'O_Ann']]
+
+​
+
+SRPF = REMAKES[(REMAKES.R_Film == "Body Snatchers") | (REMAKES.O_Film == "")]
+
+print(SRPF)
+
+  RemakeID          R_Film R_Ann OrigID                              O_Film  \
+4    AbF27  Body Snatchers  1994    PK5  The Invasion of the Body Snatchers   
+
+  O_Ann  
+4  1978  
+
+Dataviz - possible dans l'API
+Acteurs par temps de tournage
+
+"""
+
+@author: marceline
+
+"""
+
+import pandas as pd
+
+import matplotlib.pyplot as plt
+
+import matplotlib.animation as animation
+
+import numpy as np
+
+import seaborn as sns
+
+​
+
+​
+
+Acteurs=pd.read_csv("/home/perrot/Bureau/TEST/ACTEURS.csv", encoding = 'utf8', sep=',')
+
+Acteurs.columns=['ActeurID','Acteurs','Act_CDB','Act_CDF','Act_Prenoms','Act_Noms','Act_Sx','Act_DDN','Act_DDD','Act_Prf','Act_Orig']
+
+Acteurs2=Acteurs.dropna(axis = 0, how ='any')
+
+ActeurTemp=Acteurs2[["Acteurs","Act_CDB", "Act_CDF"]]
+
+ActeurMod=ActeurTemp.assign(Diff = ActeurTemp["Act_CDF"] - ActeurTemp["Act_CDB"])
+
+​
+
+dff = ActeurMod[(ActeurMod['Diff'] >65)]
+
+ax = sns.pointplot(x="Diff", y="Acteurs", data=dff, color="#95a5a6", join=False )
+
+ax.set_title(label='Acteurs par temps de tournage', fontsize=20)
+
+plt.show();
+
+​
+
+La nombre des Films par année de sortie
+
+"""
+
+@author: perrot
+
+"""
+
+import pandas as pd
+
+import seaborn as sns
+
+import matplotlib.pyplot as plt
+
+​
+
+​
+
+FILMSCSV = pd.read_csv("/home/perrot/Bureau/TEST/GRAPHICCSV/FILMS.csv", encoding = 'utf8', sep=',')
+
+FILMSCSV.columns = ('FilmRef','Film_Nom', 'Film_Ann', 'FR_nom', 'FP_nom', 'FS_nom', 'Process', 'Categorie', 'F_Rcp')
+
+FILMYR = FILMSCSV[['Film_Nom', 'Film_Ann','Categorie']]
+
+FILMYR2 = FILMYR.dropna(axis = 0, how ='any')
+
+#print(FILMYR2)
+
+​
+
+FILMYG = FILMYR2.groupby(['Film_Ann']).size().sort_values(ascending=False).reset_index()
+
+FILMYG.columns = ["Film_Ann", "frequency"]
+
+​
+
+FILMYG_dff = FILMYG[(FILMYG["Film_Ann"] >= 1980)]
+
+​
+
+#ax = sns.pointplot(x="Film_Ann", y="frequency", data=FILMYG_dff, join=False, palette="Set2")
+
+​
+
+y = FILMYG_dff.groupby(['Film_Ann']).sum()
+
+y = y['frequency']
+
+x = y.index.astype(int)
+
+​
+
+plt.figure(figsize=(12,8))
+
+ax = sns.barplot(y = y, x = x)
+
+ax.set_xlabel(xlabel='Année de sortie', fontsize=16)
+
+ax.set_xticklabels(labels = x, fontsize=12, rotation=50)
+
+ax.set_ylabel(ylabel='Nombre', fontsize=16)
+
+ax.set_title(label='La nombre des Films par année de sortie', fontsize=20)
+
+plt.show();
+
+                
+
+fig = ax.get_figure()
+
+#fig.savefig('/home/perrot/Bureau/TEST/FilmAnn.png')
+
+Wordcloud par nombre d'occurrences de la Catégorie (plus d'occurrences = plus grand le mot)
+
+"""
+
+@author: perrot
+
+"""
+
+​
+
+import pandas as pd
+
+import plotly as plt
+
+from wordcloud import WordCloud, STOPWORDS
+
+from matplotlib import *
+
+import sys
+
+from pylab import *
+
+​
+
+FILMSCSV = pd.read_csv("/home/perrot/Bureau/TEST/GRAPHICCSV/FILMS.csv", encoding = 'utf8', sep=',')
+
+FILMSCSV.columns = ('FilmRef','Film_Nom', 'Film_Ann', 'FR_nom', 'FP_nom', 'FS_nom', 'Process', 'Categorie', 'F_Rcp')
+
+FILMCAT=FILMSCSV[['Film_Nom','Categorie']]
+
+​
+
+#FILMCY.columns = ["Categorie","Film_Ann"]
+
+#FILMCAT["Categorie"] = FILMCY["Categorie"].apply(lambda x: x.strip())
+
+​
+
+words = dict()
+
+trunc_occurences = FILMCAT.groupby(["Categorie"]).size().sort_values(ascending=False).reset_index()
+
+trunc_occurences.columns = ["Categorie", "frequency"]
+
+for i in range(18):
+
+    words[trunc_occurences["Categorie"][i]] = trunc_occurences["frequency"][i]
+
+tone = 179 # define the color of the words
+
+f, ax = plt.subplots(figsize=(14, 6))
+
+wordcloud = WordCloud(width=550,height=300, background_color='white', 
+
+                      max_words=162,relative_scaling=0.7,
+
+                      normalize_plurals=False)
+
+wordcloud.generate_from_frequencies(words)
+
+plt.imshow(wordcloud, interpolation="bilinear")
+
+plt.axis('off')
+
+plt.show()
+
+​
+
+fig = ax.get_figure()
+
+fig.savefig('/home/perrot/Bureau/Code Working Graphicwordcloud.png')
+
+​
+
+l'API
+
+#!/usr/bin/env python3
+
+# -- coding: utf-8 --
+
+"""
+
+Created on Mon Jul  1 16:17:27 2019
+
+​
+
+@author: rousseau
+
+"""
+
+import dash
+
+import dash_auth
+
+import dash_core_components as dcc
+
+import dash_html_components as html
+
+from dash.dependencies import Input, Output
+
+​
+
+​
+
+# librairies dimport de données
+
+import requests
+
+from pandas.io.json import json_normalize
+
+​
+
+# librairies de manipulation des données
+
+import pandas as pd
+
+​
+
+​
+
+# librairies de visualisation (table + graph)
+
+import dash_table
+
+from dash_table import DataTable
+
+​
+
+VALID_USERNAME_PASSWORD_PAIRS = [
+
+    ['hello', 'world']
+
+]
+
+​
+
+app = dash.Dash('auth')
+
+auth = dash_auth.BasicAuth(
+
+    app,
+
+    VALID_USERNAME_PASSWORD_PAIRS
+
+)
+
+# CREATION DE L'APPLICATION ----------------------------------------------------------------------------------------------------------
+
+app = dash.Dash()
+
+​
+
+# Lecture du CSV par pandas, noter le format du fichier (local sur /home/goudot/movies/data)
+
+#URL = "file:///home/rousseau/Bureau/TEST/FILMS.csv"
+
+tbl = pd.read_csv("/home/perrot/Bureau/TEST/GRAPHICCSV/FILMS.csv", encoding = 'utf8', sep=',')
+
+tbl.columns = ('FilmRef','Film_Nom', 'Film_Ann', 'FR_nom', 'FP_nom', 'FS_nom', 'Process', 'Categorie', 'F_Rcp')
+
+    # le même, avec les colonnes qui nous intéresse
+
+tbl1 = tbl[['Categorie']]
+
+print(tbl.head())  
+
+​
+
+# Extraction des villes disponibles dans la dataframe 'df'
+
+print(tbl1.head())
+
+​
+
+Categorie_dispo = tbl1["Categorie"].unique()
+
+​
+
+colors = {
+
+    'background': 'orange',
+
+    'text': 'red'
+
+}
+
+​
+
+app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
+
+    # Titre de l'application ainsi qu'un peu d'habillage  
+
+    html.H1(
+
+        children='Mediathéque',
+
+        style={'textAlign': 'center', 'color': colors['text']}
+
+    ),
+
+    dcc.Input(id='my-id', value='Dash App', type='text'),
+
+    html.Div(id='my-div'),
+
+    
+
+​
+
+#
+
+#    html.Br(),
+
+#   html.Hr(),
+
+#    html.Label('Choix Categorie', style={'fontSize': 20, 'marginTop': 30,'color': colors['text']}),
+
+#    dcc.Checklist(
+
+#        id='input-Categorie',
+
+#        # Pour les valeurs de Categorie, intégration dynamique de la variable 'Categorie_dispo' déclarée en amont et issue de la dataframe 'df'
+
+#        options=[{'label': i, 'value': i} for i in Categorie_dispo],
+
+#        values=Categorie_dispo
+
+#    ),
+
+    html.Br(),
+
+    html.Br(),
+
+    html.Div(id='output-Categorie'),
+
+    
+
+ 
+
+       
+
+    html.H4('Sélectionner votre catégorie'),            
+
+    dcc.Dropdown(
+
+    options=[
+
+        {'label': 'Suspense', 'value': 'Susp'},
+
+        {'label': 'Dramatique', 'value': 'Dram'},
+
+        {'label': 'Comédie', 'value': 'Comd'},
+
+        {'label': 'Romantique', 'value': 'Romt'},
+
+        {'label': 'Science-fiction', 'value': 'ScFi'},
+
+        {'label': 'Action', 'value': 'Actn'},
+
+        {'label': 'Horreur', 'value': 'Horr'},
+
+        {'label': 'Pornographique', 'value': 'Porn'},
+
+        {'label': 'Déssin-animé', 'value': 'Cart'}
+
+    ],
+
+    value='MTL'
+
+),
+
+​
+
+​
+
+    dcc.Slider(
+
+        id='my-slider',
+
+        min=1900,
+
+        max=2019,
+
+        step=1,
+
+        value=10,
+
+    ),
+
+    html.Div(id='slider-output-container'),
+
+    
+
+     html.H3(
+
+        children="Développé par Marceline, Sondra et Franck",
+
+        style={'textAlign': 'center', 'color': colors['text']}
+
+        ),
+
+])
+
+​
+
+​
+
+@app.callback(
+
+    dash.dependencies.Output('slider-output-container', 'children'),
+
+    [dash.dependencies.Input('my-slider', 'value')])
+
+def update_output(value):
+
+    return 'Sélection par année"{}"'.format(value)
+
+​
+
+ 
+
+     
+
+​
+
+#@app.callback(Output(component_id='output-Categorie', component_property='children'),
+
+#              [Input(component_id='input-Categorie', component_property='values')])
+
+def update_output_div(input_value):
+
+   # return tlb
+
+   
+
+    print(tbl1.head())
+
+​
+
+​
+
+Categorie_dispo = tbl1["Categorie"].unique() 
+
+   
+
+​
+
+​
+
+if __name__ == '__main__':
+
+#    app.run_server()
+
+    # app.run_server(debug=False, port=8080)
+
+  FilmRef             Film_Nom  Film_Ann       FR_nom       FP_nom  \
+0   AWj27    The Promised Land    1987.0      D:Wajda          PN:   
+1     T10            Red Dwarf    1998.0    D:LeMoine          PU:   
+2    HK20     The White Sister    1933.0     D:H.King          PN:   
+3     H83               Frenzy    1972.0  D:Hitchcock  P:Hitchcock   
+4   FSt42  Blondie for Victory    1942.0    D:Strayer          PN:   
+
+        FS_nom Process Categorie F_Rcp  
+0          SU:     prc     Drame    aw  
+1          SU:     prc     Drame   NaN  
+2          SU:     bws     Drame    aw  
+3  St:Pinewood    Tcol  Suspense   NaN  
+4  St:Columbia     bnw   Comédie    aw  
+  Categorie
+0     Drame
+1     Drame
+2     Drame
+3  Suspense
+4   Comédie
+ * Serving Flask app "__main__" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+
+import dash
+
+import dash_core_components as dcc
+
+import dash_html_components as html
+
+import pandas as pd
+
+​
+
+df = pd.read_csv('/home/perrot/Bureau/TEST/GRAPHICCSV/FILMS.csv')
+
+​
+
+​
+
+def generate_table(dataframe, max_rows=10):
+
+    return html.Table(
+
+        # Header
+
+        [html.Tr([html.Th(col) for col in dataframe.columns])] +
+
+​
+
+        # Body
+
+        [html.Tr([
+
+            html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
+
+        ]) for i in range(min(len(dataframe), max_rows))]
+
+    )
+
+​
+
+​
+
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
+​
+
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
+​
+
+app.layout = html.Div(children=[
+
+    html.H4(children='Film'),
+
+    generate_table(df)
+
+])
+
+​
+
+if __name__ == '__main__':
+
+#    app.run_server(debug=True)
+
+  File "<ipython-input-6-5256906e9116>", line 31
+    #    app.run_server(debug=True)
+                                   ^
+SyntaxError: unexpected EOF while parsing
+
+
+Effectuer une recherche de film sur 2 ou 3 critères, via une interface web.
+
+The code
+
+The visual
+
+The connection
+
+The updates to visualisation
+
+Conclusion
+de Projet
+
+Notre representations MCP MDP a changez
+
+Les données avait plusiers limitations
+
+​
+
+    
+
+Perspectives personnelles
